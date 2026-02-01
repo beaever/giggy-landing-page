@@ -1,0 +1,40 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Custom Spacing */
+  --spacing-125: 31.25rem;
+  --spacing-200: 50rem;
+  --spacing-100: 25rem;
+  --spacing-150: 37.5rem;
+  --spacing-75: 18.75rem;
+  --spacing-37: 9.25rem;
+  --spacing-4_5: 1.125rem;
+  --spacing-0_75: 0.1875rem;
+  --spacing-4_25: 1.0625rem;
+  --spacing-11_5: 2.875rem;
+  --spacing-31: 7.75rem;
+  --spacing-44_5: 11.125rem;
+  --spacing-35_5: 8.875rem;
+
+  /* Custom Border Width */
+  --border-width-14: 14px;
+
+  /* Custom Radius */
+  --radius-4xl: 2rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
