@@ -1,263 +1,379 @@
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import PhoneMockup from '@/components/PhoneMockup';
-import {
-  ArrowRight,
-  MapPin,
-  MessageCircle,
-  Briefcase,
-  Zap,
-  Download,
-  Search,
-  Send,
-} from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import MarqueeTicker from '@/components/MarqueeTicker';
+import AnimatedCounter from '@/components/AnimatedCounter';
+
+const AppleIcon = () => (
+  <svg className='w-5 h-5 shrink-0' viewBox='0 0 24 24' fill='currentColor'>
+    <path d='M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z' />
+  </svg>
+);
+
+const GoogleIcon = () => (
+  <svg className='w-5 h-5 shrink-0' viewBox='0 0 24 24' fill='currentColor'>
+    <path d='M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z' />
+  </svg>
+);
+
+const FEATURES = [
+  {
+    icon: '📍',
+    title: '위치 기반 추천',
+    desc: '내 주변 반경의 일자리를 실시간으로 확인하세요. GPS 기반으로 가장 가까운 기회를 먼저 보여드립니다.',
+    wide: true,
+  },
+  {
+    icon: '💬',
+    title: '실시간 채팅',
+    desc: '고용주와 직접 대화하며 면접 일정을 즉시 잡으세요.',
+    wide: false,
+  },
+  {
+    icon: '💼',
+    title: '다양한 직종',
+    desc: 'Barista, Kitchen Hand, Retail 등 캐주얼 잡을 한눈에 확인하세요.',
+    wide: false,
+  },
+  {
+    icon: '⚡',
+    title: '빠른 매칭',
+    desc: '복잡한 절차 없이 원탭으로 지원하고 즉시 연결되세요. 이력서 없이도 프로필 하나로 모든 지원이 가능합니다.',
+    wide: true,
+  },
+];
+
+const STEPS = [
+  {
+    num: '01',
+    title: '앱 다운로드',
+    desc: 'App Store 또는 Google Play에서 GIGGY를 무료로 다운로드하세요. 가입은 1분이면 충분합니다.',
+  },
+  {
+    num: '02',
+    title: '일자리 탐색',
+    desc: '위치와 원하는 직종을 설정하면 주변의 맞춤 일자리를 실시간으로 추천받을 수 있습니다.',
+  },
+  {
+    num: '03',
+    title: '지원 & 연결',
+    desc: '마음에 드는 일자리에 원탭으로 지원하고, 채팅으로 고용주와 바로 연결되세요.',
+  },
+];
 
 export default function Home() {
   return (
-    <main className='min-h-screen bg-black text-white overflow-hidden relative selection:bg-white/20'>
-      {/* Background Decor */}
-      <div className='absolute top-0 right-0 w-125 h-125 bg-white/5 blur-[100px] rounded-full pointer-events-none translate-x-1/2 -translate-y-1/2' />
-      <div className='absolute bottom-0 left-0 w-125 h-125 bg-white/5 blur-[100px] rounded-full pointer-events-none -translate-x-1/2 translate-y-1/2' />
-      <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-blue-500/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2' />
+    <main className='min-h-screen bg-black text-white overflow-x-hidden'>
+      <Navbar />
 
-      {/* Hero Section */}
-      <section className='relative z-10 min-h-screen flex items-center'>
-        <div className='container mx-auto px-6 py-12 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20'>
-          {/* Left Content */}
-          <div className='flex-1 flex flex-col items-center lg:items-start text-center lg:text-left'>
-            <span className='inline-block px-4 py-2 bg-white/10 rounded-full text-sm font-medium mb-6 backdrop-blur-sm'>
-              🇦🇺 워홀러 · 유학생을 위한 일자리 플랫폼
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          HERO
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className='relative min-h-[100dvh] flex flex-col lg:flex-row items-center pt-16 overflow-hidden'>
+        {/* Grid bg */}
+        <div
+          aria-hidden
+          className='absolute inset-0 pointer-events-none'
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+            backgroundSize: '72px 72px',
+          }}
+        />
+        {/* Radial vignette */}
+        <div
+          aria-hidden
+          className='absolute inset-0 pointer-events-none'
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 100%, transparent 40%, #000 100%)',
+          }}
+        />
+
+        {/* Left — text */}
+        <div className='relative z-10 flex-1 flex flex-col justify-center px-6 md:px-10 lg:px-16 xl:px-24 py-20 lg:py-0'>
+          {/* Live badge */}
+          <div
+            className='inline-flex items-center gap-2.5 mb-10 animate-fade-in'
+            style={{ animationDelay: '0ms' }}
+          >
+            <span className='relative flex h-2 w-2'>
+              <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-30' />
+              <span className='relative inline-flex rounded-full h-2 w-2 bg-white' />
             </span>
-            <h1 className='text-5xl sm:text-6xl lg:text-7xl font-black tracking-tighter mb-4'>
-              GIGGY
-            </h1>
-            <h2 className='text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-6 text-gray-200'>
-              호주에서 일자리 찾기,
-              <br />
-              <span className='text-white'>이제 쉽게</span>
-            </h2>
-            <p className='text-gray-400 text-lg mb-8 max-w-md'>
-              위치 기반 일자리 추천부터 고용주와의 실시간 채팅까지.
-              <br />
-              당신의 호주 생활을 GIGGY가 함께합니다.
-            </p>
-
-            {/* Download Buttons */}
-            <div className='flex flex-col sm:flex-row gap-4 mb-8'>
-              <button className='group bg-white text-black px-6 py-3.5 rounded-xl font-bold text-base hover:bg-gray-100 transition-all flex items-center justify-center gap-2 cursor-pointer'>
-                <svg
-                  className='w-6 h-6'
-                  viewBox='0 0 24 24'
-                  fill='currentColor'
-                >
-                  <path d='M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z' />
-                </svg>
-                App Store
-              </button>
-              <button className='group bg-white/10 text-white px-6 py-3.5 rounded-xl font-bold text-base hover:bg-white/20 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20'>
-                <svg
-                  className='w-6 h-6'
-                  viewBox='0 0 24 24'
-                  fill='currentColor'
-                >
-                  <path d='M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z' />
-                </svg>
-                Google Play
-              </button>
-            </div>
-
-            <p className='text-gray-500 text-sm'>
-              ✓ 무료 다운로드 · ✓ 간편 가입 · ✓ 즉시 사용
-            </p>
+            <span className='text-[10px] font-semibold text-white/40 uppercase tracking-[0.22em]'>
+              워홀러 · 유학생을 위한 일자리 플랫폼
+            </span>
           </div>
 
-          {/* Right Content (Phone Mockup) */}
-          <div className='flex-1 flex justify-center items-center w-full max-w-md lg:max-w-none'>
-            <div className='scale-90 lg:scale-100 origin-center transition-transform duration-500 hover:scale-[1.02]'>
+          {/* Hero display type */}
+          <div className='overflow-hidden'>
+            <h1
+              className='text-[clamp(5rem,12vw,11rem)] font-black leading-[0.86] tracking-tighter animate-slide-up'
+              style={{ animationDelay: '80ms' }}
+            >
+              FIND
+            </h1>
+          </div>
+          <div className='overflow-hidden'>
+            <h1
+              className='text-[clamp(5rem,12vw,11rem)] font-black leading-[0.86] tracking-tighter animate-slide-up'
+              style={{ animationDelay: '180ms' }}
+            >
+              YOUR
+            </h1>
+          </div>
+          <div className='overflow-hidden mb-10'>
+            <h1
+              className='text-[clamp(5rem,12vw,11rem)] font-black leading-[0.86] tracking-tighter text-white/15 animate-slide-up'
+              style={{ animationDelay: '280ms' }}
+            >
+              GIG.
+            </h1>
+          </div>
+
+          <p
+            className='text-white/40 text-base md:text-[17px] mb-10 max-w-[300px] leading-relaxed animate-fade-in'
+            style={{ animationDelay: '500ms' }}
+          >
+            호주에서 일자리 찾기, 이제 쉽게.
+            <br />
+            위치 기반 추천부터 실시간 채팅까지.
+          </p>
+
+          {/* Store buttons */}
+          <div
+            className='flex flex-wrap gap-3 animate-fade-in'
+            style={{ animationDelay: '650ms' }}
+          >
+            <button className='group flex items-center gap-2.5 bg-white text-black px-6 py-3.5 rounded-full font-bold text-sm tracking-tight hover:bg-white/88 active:scale-95 transition-all duration-150 cursor-pointer'>
+              <AppleIcon />
+              App Store
+              <ArrowUpRight className='w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform' />
+            </button>
+            <button className='group flex items-center gap-2.5 border border-white/15 text-white px-6 py-3.5 rounded-full font-bold text-sm tracking-tight hover:border-white/40 hover:bg-white/[0.05] active:scale-95 transition-all duration-150 cursor-pointer'>
+              <GoogleIcon />
+              Google Play
+            </button>
+          </div>
+
+          {/* Scroll cue */}
+          <div
+            className='flex items-center gap-3 mt-16 animate-fade-in'
+            style={{ animationDelay: '900ms' }}
+          >
+            <div className='w-8 h-px bg-white/15' />
+            <span className='text-[10px] text-white/25 tracking-[0.22em] uppercase'>
+              스크롤
+            </span>
+          </div>
+        </div>
+
+        {/* Right — phone */}
+        <div className='relative z-10 flex-1 flex items-center justify-center py-14 lg:py-0 lg:pr-10 xl:pr-20'>
+          <div style={{ transform: 'rotate(-5deg)' }}>
+            <div className='animate-float'>
               <PhoneMockup />
             </div>
           </div>
+          {/* Glow */}
+          <div
+            aria-hidden
+            className='absolute inset-0 pointer-events-none'
+            style={{
+              background:
+                'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 70%)',
+            }}
+          />
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className='relative z-10 py-24 border-t border-white/10'>
-        <div className='container mx-auto px-6'>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl sm:text-4xl font-bold mb-4'>
-              왜 <span className='text-blue-400'>GIGGY</span>인가요?
-            </h2>
-            <p className='text-gray-400 text-lg max-w-2xl mx-auto'>
-              호주에서 일자리를 찾는 가장 스마트한 방법
-            </p>
-          </div>
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          MARQUEE
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <MarqueeTicker />
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
-            {/* Feature 1 */}
-            <div className='bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all hover:bg-white/10'>
-              <div className='w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4'>
-                <MapPin className='w-6 h-6 text-blue-400' />
-              </div>
-              <h3 className='text-xl font-bold mb-2'>위치 기반 추천</h3>
-              <p className='text-gray-400 text-sm'>
-                내 주변의 일자리를 실시간으로 확인하고 빠르게 지원하세요.
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          FEATURES — BENTO GRID
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className='py-28 md:py-36 px-6 md:px-10 lg:px-16 xl:px-24'>
+        <div className='max-w-[1280px] mx-auto'>
+          {/* Section header */}
+          <div className='flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6'>
+            <div>
+              <p className='text-white/25 text-[10px] font-semibold uppercase tracking-[0.25em] mb-4'>
+                FEATURES
               </p>
+              <h2 className='text-4xl md:text-5xl lg:text-[3.5rem] font-black tracking-tighter leading-none'>
+                왜 GIGGY인가요?
+              </h2>
             </div>
-
-            {/* Feature 2 */}
-            <div className='bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all hover:bg-white/10'>
-              <div className='w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4'>
-                <MessageCircle className='w-6 h-6 text-green-400' />
-              </div>
-              <h3 className='text-xl font-bold mb-2'>실시간 채팅</h3>
-              <p className='text-gray-400 text-sm'>
-                고용주와 직접 대화하며 빠르게 면접 일정을 잡으세요.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className='bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all hover:bg-white/10'>
-              <div className='w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4'>
-                <Briefcase className='w-6 h-6 text-purple-400' />
-              </div>
-              <h3 className='text-xl font-bold mb-2'>다양한 직종</h3>
-              <p className='text-gray-400 text-sm'>
-                Barista, Kitchen Hand, Retail 등 다양한 캐주얼 잡을 한눈에.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className='bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all hover:bg-white/10'>
-              <div className='w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center mb-4'>
-                <Zap className='w-6 h-6 text-orange-400' />
-              </div>
-              <h3 className='text-xl font-bold mb-2'>빠른 매칭</h3>
-              <p className='text-gray-400 text-sm'>
-                복잡한 절차 없이 간단하게 지원하고 빠르게 연결되세요.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className='relative z-10 py-24 border-t border-white/10'>
-        <div className='container mx-auto px-6'>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl sm:text-4xl font-bold mb-4'>
-              어떻게 사용하나요?
-            </h2>
-            <p className='text-gray-400 text-lg max-w-2xl mx-auto'>
-              3단계로 시작하는 호주 일자리 찾기
-            </p>
-          </div>
-
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto'>
-            {/* Step 1 */}
-            <div className='text-center'>
-              <div className='w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 relative'>
-                <Download className='w-7 h-7 text-white' />
-                <span className='absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-bold'>
-                  1
-                </span>
-              </div>
-              <h3 className='text-xl font-bold mb-2'>앱 다운로드</h3>
-              <p className='text-gray-400 text-sm'>
-                App Store 또는 Google Play에서
-                <br />
-                GIGGY를 무료로 다운로드하세요.
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className='text-center'>
-              <div className='w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 relative'>
-                <Search className='w-7 h-7 text-white' />
-                <span className='absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-bold'>
-                  2
-                </span>
-              </div>
-              <h3 className='text-xl font-bold mb-2'>일자리 탐색</h3>
-              <p className='text-gray-400 text-sm'>
-                위치와 직종을 설정하고
-                <br />
-                맞춤 일자리를 추천받으세요.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className='text-center'>
-              <div className='w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 relative'>
-                <Send className='w-7 h-7 text-white' />
-                <span className='absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-bold'>
-                  3
-                </span>
-              </div>
-              <h3 className='text-xl font-bold mb-2'>지원 & 연결</h3>
-              <p className='text-gray-400 text-sm'>
-                원하는 일자리에 지원하고
-                <br />
-                채팅으로 바로 연결되세요.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className='relative z-10 py-24 border-t border-white/10'>
-        <div className='container mx-auto px-6'>
-          <div className='bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl p-8 sm:p-12 text-center border border-white/10 backdrop-blur-sm'>
-            <h2 className='text-3xl sm:text-4xl font-bold mb-4'>
-              지금 바로 시작하세요
-            </h2>
-            <p className='text-gray-300 text-lg mb-8 max-w-xl mx-auto'>
-              호주에서의 새로운 기회, GIGGY와 함께 찾아보세요.
+            <p className='text-white/35 text-sm max-w-[220px] md:text-right leading-relaxed'>
+              호주에서 일자리를 찾는
               <br />
-              수많은 워홀러와 유학생이 이미 사용하고 있습니다.
+              가장 스마트한 방법
             </p>
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <button className='group bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all flex items-center justify-center gap-2 cursor-pointer'>
-                무료로 시작하기
-                <ArrowRight className='w-5 h-5 group-hover:translate-x-1 transition-transform' />
+          </div>
+
+          {/* Bento grid */}
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4'>
+            {FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className={`group relative bg-white/[0.03] border border-white/[0.07] rounded-2xl p-8 md:p-9 hover:border-white/18 hover:bg-white/[0.055] transition-all duration-500 cursor-default overflow-hidden ${
+                  f.wide ? 'lg:col-span-2' : ''
+                }`}
+              >
+                {/* Inner glow */}
+                <div
+                  aria-hidden
+                  className='absolute -top-10 -right-10 w-40 h-40 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all duration-700'
+                />
+                <div className='relative z-10'>
+                  <div className='flex items-start justify-between mb-9'>
+                    <div className='w-11 h-11 border border-white/12 rounded-xl flex items-center justify-center text-lg group-hover:border-white/28 transition-colors duration-400'>
+                      {f.icon}
+                    </div>
+                    <ArrowUpRight className='w-4 h-4 text-white/12 group-hover:text-white/45 transition-colors duration-400' />
+                  </div>
+                  <h3 className='text-xl font-bold mb-3 tracking-tight'>{f.title}</h3>
+                  <p className='text-white/38 text-sm leading-relaxed max-w-sm'>{f.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          STATS
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className='border-y border-white/[0.07] py-16 md:py-20'>
+        <div className='max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16 xl:px-24'>
+          <div className='grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/[0.07]'>
+            <div className='py-12 md:py-0 md:pr-16 text-center md:text-left'>
+              <div className='text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-tighter leading-none mb-3 tabular-nums'>
+                <AnimatedCounter target={1000} suffix='+' />
+              </div>
+              <p className='text-white/28 text-[10px] uppercase tracking-[0.25em]'>
+                활성 워홀러
+              </p>
+            </div>
+            <div className='py-12 md:py-0 md:px-16 text-center'>
+              <div className='text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-tighter leading-none mb-3 tabular-nums'>
+                <AnimatedCounter target={50} suffix='+' />
+              </div>
+              <p className='text-white/28 text-[10px] uppercase tracking-[0.25em]'>
+                파트너 업체
+              </p>
+            </div>
+            <div className='py-12 md:py-0 md:pl-16 text-center md:text-right'>
+              <div className='text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-tighter leading-none mb-3 tabular-nums'>
+                <AnimatedCounter target={3} />
+              </div>
+              <p className='text-white/28 text-[10px] uppercase tracking-[0.25em]'>
+                주요 도시
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          HOW IT WORKS
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className='py-28 md:py-36 px-6 md:px-10 lg:px-16 xl:px-24'>
+        <div className='max-w-[1280px] mx-auto'>
+          <div className='mb-16'>
+            <p className='text-white/25 text-[10px] font-semibold uppercase tracking-[0.25em] mb-4'>
+              HOW IT WORKS
+            </p>
+            <h2 className='text-4xl md:text-5xl lg:text-[3.5rem] font-black tracking-tighter leading-none'>
+              3단계로 시작
+            </h2>
+          </div>
+
+          <div className='divide-y divide-white/[0.07]'>
+            {STEPS.map((step) => (
+              <div
+                key={step.num}
+                className='group flex items-start gap-7 md:gap-12 py-9 md:py-10 hover:pl-3 transition-all duration-350 cursor-default'
+              >
+                <span className='text-xs font-mono text-white/18 pt-1 shrink-0 w-7 group-hover:text-white/50 transition-colors duration-350'>
+                  {step.num}
+                </span>
+                <div className='flex-1 min-w-0'>
+                  <h3 className='text-xl md:text-2xl font-bold mb-2 tracking-tight'>
+                    {step.title}
+                  </h3>
+                  <p className='text-white/38 text-sm md:text-base leading-relaxed max-w-lg'>
+                    {step.desc}
+                  </p>
+                </div>
+                <ArrowUpRight className='w-4 h-4 text-white/10 shrink-0 group-hover:text-white/38 transition-colors duration-350 mt-1.5' />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          CTA — INVERTED
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className='bg-white text-black py-24 md:py-32 px-6 md:px-10 lg:px-16 xl:px-24'>
+        <div className='max-w-[1280px] mx-auto'>
+          <div className='flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12'>
+            <div>
+              <p className='text-black/28 text-[10px] font-semibold uppercase tracking-[0.25em] mb-7'>
+                GET STARTED
+              </p>
+              <h2 className='text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[0.88]'>
+                호주에서의
+                <br />
+                새로운 기회
+              </h2>
+            </div>
+
+            <div className='flex flex-col sm:flex-row gap-3 shrink-0'>
+              <button className='group flex items-center gap-2.5 bg-black text-white px-7 py-4 rounded-full font-bold text-sm tracking-tight hover:bg-black/80 active:scale-95 transition-all duration-150 cursor-pointer'>
+                <AppleIcon />
+                App Store
+                <ArrowUpRight className='w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform' />
+              </button>
+              <button className='group flex items-center gap-2.5 border border-black/18 text-black px-7 py-4 rounded-full font-bold text-sm tracking-tight hover:border-black/50 hover:bg-black/[0.05] active:scale-95 transition-all duration-150 cursor-pointer'>
+                <GoogleIcon />
+                Google Play
               </button>
             </div>
           </div>
+
+          <div className='mt-16 pt-9 border-t border-black/[0.09] flex flex-wrap gap-x-6 gap-y-2 text-xs text-black/28'>
+            <span>✓ 무료 다운로드</span>
+            <span>✓ 간편 가입</span>
+            <span>✓ 즉시 사용 가능</span>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className='relative z-10 border-t border-white/10 py-12'>
-        <div className='container mx-auto px-6'>
-          <div className='flex flex-col md:flex-row items-center justify-between gap-8'>
-            <div className='text-center md:text-left'>
-              <h3 className='text-2xl font-bold mb-2'>GIGGY</h3>
-              <p className='text-gray-500 text-sm'>
-                호주에서 일자리 찾기, 이제 쉽게
-              </p>
-            </div>
-
-            <div className='flex flex-col sm:flex-row items-center gap-6 text-sm'>
-              <Link
-                href='/terms'
-                className='text-gray-400 hover:text-white transition-colors'
-              >
-                이용약관
-              </Link>
-              <a
-                href='mailto:kooz.giggy@gmail.com'
-                className='text-gray-400 hover:text-white transition-colors'
-              >
-                문의하기
-              </a>
-            </div>
-          </div>
-
-          <div className='mt-8 pt-8 border-t border-white/10 text-center'>
-            <p className='text-gray-500 text-sm'>
-              © 2026 GIGGY. All rights reserved. Made with ❤️ for Aussie
-              dreamers.
-            </p>
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          FOOTER
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <footer className='border-t border-white/[0.07] py-9 px-6 md:px-10 lg:px-16 xl:px-24'>
+        <div className='max-w-[1280px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-5'>
+          <span className='text-xl font-black tracking-tight select-none'>GIGGY</span>
+          <div className='flex flex-wrap items-center gap-x-7 gap-y-2 text-xs text-white/28'>
+            <Link href='/terms' className='hover:text-white transition-colors duration-200'>
+              이용약관
+            </Link>
+            <a
+              href='mailto:kooz.giggy@gmail.com'
+              className='hover:text-white transition-colors duration-200'
+            >
+              문의하기
+            </a>
+            <span>© 2026 GIGGY. All rights reserved.</span>
           </div>
         </div>
       </footer>
